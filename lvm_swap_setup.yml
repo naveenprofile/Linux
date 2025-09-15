@@ -1,0 +1,99 @@
+
+---
+- name: LVM and Swap Setup Playbook
+  hosts: localhost
+  become: true
+  vars:
+    disk_device: /dev/sdb
+    vg_name: my_vg
+    lv_name: my_lv
+    lv_size: 10G
+    mount_point: /mnt/mydata
+    fs_type: ext4
+    extend_size: +5G
+    reduced_size: 8G
+    swap_file: /swapfile
+    swap_size: 2G
+
+  tasks:
+
+  - name: Create physical volume
+    command: pvcreate {{ disk_device }}
+    ignore_errors: true
+
+  - name: Create volume group
+    command: vgcreate {{ vg_name }} {{ disk_device }}
+    ignore_errors: true
+
+  - name: Create logical volume
+    command: lvcreate -L {{ lv_size }} -n {{ lv_name }} {{ vg_name }}
+    ignore_errors: true
+
+  - name: Format logical volume
+    filesystem:
+      fstype: "{{ fs_type }}"
+      dev: "/dev/{{ vg_name }}/{{ lv_name }}"
+
+  - name: Create mount point
+    file:
+      path: "{{ mount_point }}"
+      state: directory
+
+  - name: Mount logical volume
+    mount:
+      path: "{{ mount_point }}"
+      src: "/dev/{{ vg_name }}/{{ lv_name }}"
+      fstype: "{{ fs_type }}"
+      state: mounted
+
+  - name: Extend logical volume
+    command: lvextend -L {{ extend_size }} /dev/{{ vg_name }}/{{ lv_name }}
+    ignore_errors: true
+
+  - name: Resize filesystem after extension
+    command: resize2fs /dev/{{ vg_name }}/{{ lv_name }}
+    when: fs_type == "ext4"
+
+  - name: Unmount logical volume before reduction
+    command: umount {{ mount_point }}
+    ignore_errors: true
+
+  - name: Check filesystem before reduction
+    command: e2fsck -f /dev/{{ vg_name }}/{{ lv_name }}
+    ignore_errors: true
+
+  - name: Resize filesystem before reduction
+    command: resize2fs /dev/{{ vg_name }}/{{ lv_name }} {{ reduced_size }}
+    ignore_errors: true
+
+  - name: Reduce logical volume
+    command: lvreduce -L {{ reduced_size }} /dev/{{ vg_name }}/{{ lv_name }} --force
+    ignore_errors: true
+
+  - name: Remount logical volume
+    mount:
+      path: "{{ mount_point }}"
+      src: "/dev/{{ vg_name }}/{{ lv_name }}"
+      fstype: "{{ fs_type }}"
+      state: mounted
+
+  - name: Create swap file
+    command: fallocate -l {{ swap_size }} {{ swap_file }}
+    ignore_errors: true
+
+  - name: Set permissions on swap file
+    file:
+      path: "{{ swap_file }}"
+      mode: '0600'
+
+  - name: Format swap file
+    command: mkswap {{ swap_file }}
+
+  - name: Enable swap file
+    command: swapon {{ swap_file }}
+
+  - name: Make swap persistent
+    lineinfile:
+      path: /etc/fstab
+      line: "{{ swap_file }} none swap sw 0 0"
+      state: present
