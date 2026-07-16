@@ -188,6 +188,7 @@ Additional IP ranges within the same subnet. Useful for:
 5. IP range: 10.0.100.0/24
 6. Click "Add"
 ```
+A Primary IP Range is the main IP address range of a subnet and is used to assign primary internal IP addresses to Compute Engine VMs and other resources. Every subnet must have one Primary IP Range. A Secondary IP Range is an additional IP range used mainly for GKE Pods, GKE Services, and Alias IPs, helping separate Kubernetes networking from VM networking for better scalability and management.
 
 ### gcloud Commands - Subnets
 
