@@ -134,6 +134,9 @@ output "vpc_self_link" {
 
 ---
 
+I go to VPC Network → VPC Networks → Create VPC Network, provide a meaningful name, choose Custom subnet mode for better IP management, select Global dynamic routing for multi-region connectivity, keep the default MTU of 1460, avoid enabling broad default firewall rules, and create the VPC. I then create regional subnets, firewall rules, Cloud NAT, and other networking components as needed
+
+
 ## 2. Subnets
 
 ### Overview
