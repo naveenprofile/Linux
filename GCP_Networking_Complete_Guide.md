@@ -297,6 +297,9 @@ output "subnet_gateway" {
 ### Overview
 Firewall rules control inbound (ingress) and outbound (egress) traffic at the VPC level. They are stateful and evaluated by priority.
 A firewall rule is a security rule that controls who can access your VM, on which port, and using which protocol.
+
+If traffic matches an allow rule, it reaches the VM or else the traffic is blocked because GCP uses implied deny ingress.
+
 ### Key Characteristics
 - **Stateful**: Response traffic is automatically allowed
 - **VPC-level**: Apply to all instances in the VPC
@@ -348,6 +351,14 @@ A firewall rule is a security rule that controls who can access your VM, on whic
 10. Click "Create"
 ```
 Stateful means the application or server remembers information from previous requests, such as user sessions or connection details. Stateless means each request is independent, and the server doesn't store client information between requests. Stateless applications are generally easier to scale because any server can handle any request.
+
+Common Source Ranges
+Source Range	    Meaning
+0.0.0.0/0	        Any IPv4 address on the Internet
+10.0.0.0/8	      Private network (10.x.x.x)
+172.16.0.0/12	    Private network (172.16–172.31.x.x)
+192.168.0.0/16	  Private network (192.168.x.x)
+203.0.113.10/32	  One specific IP address
 
 ### gcloud Commands - Firewall Rules
 
