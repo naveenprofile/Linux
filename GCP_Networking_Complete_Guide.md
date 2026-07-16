@@ -933,6 +933,9 @@ output "load_balancer_ip" {
 ### Overview
 Cloud Router enables dynamic routing using BGP (Border Gateway Protocol). It allows GCP to exchange routes with on-premises networks.
 
+Cloud Router is a fully managed Google Cloud service that provides dynamic routing between a VPC and external networks using BGP. It is commonly used with HA VPN, Dedicated Interconnect, and Partner Interconnect. Cloud Router automatically learns and advertises routes, reducing manual route management and supporting dynamic updates. It does not carry network traffic itself; it only exchanges routing information, while Cloud VPN or Cloud Interconnect transports the actual traffic.
+
+
 ### Key Features
 - **BGP support**: Dynamic routing protocol
 - **Automatic failover**: Routes update automatically
