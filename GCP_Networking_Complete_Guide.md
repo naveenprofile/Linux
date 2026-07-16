@@ -1114,6 +1114,12 @@ Connect your on-premises infrastructure to Google Cloud using various connectivi
 7. Click "Create"
 ```
 
+How is Hybrid Connectivity implemented in production?
+
+First, we plan non-overlapping IP ranges for the on-premises and GCP networks. We create the VPC and subnets, then deploy a Cloud Router and an HA VPN Gateway or Dedicated Interconnect. The on-premises router is configured with a BGP session using its ASN, while Cloud Router uses its own ASN. Routes are exchanged dynamically through BGP. Next, we configure firewall rules to allow only required traffic, validate connectivity, and monitor the VPN tunnels and BGP sessions. In enterprise environments, the Network Team usually manages the connectivity and routing, while the DevOps team deploys and operates applications on top of that network infrastructure.
+
+
+
 ### gcloud Commands - Hybrid Connectivity
 
 ```bash
