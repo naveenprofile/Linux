@@ -347,6 +347,7 @@ Firewall rules control inbound (ingress) and outbound (egress) traffic at the VP
 9. Port: 22
 10. Click "Create"
 ```
+Stateful means the application or server remembers information from previous requests, such as user sessions or connection details. Stateless means each request is independent, and the server doesn't store client information between requests. Stateless applications are generally easier to scale because any server can handle any request.
 
 ### gcloud Commands - Firewall Rules
 
