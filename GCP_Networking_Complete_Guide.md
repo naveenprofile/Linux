@@ -518,6 +518,37 @@ resource "google_compute_firewall" "allow_internal" {
 }
 ```
 
+Using Variables (Best Practice)
+
+variables.tf
+
+variable "allowed_ports" {
+  default = [
+    "22",
+    "80",
+    "443"
+  ]
+}
+
+main.tf
+
+resource "google_compute_firewall" "allow_ports" {
+  name    = "allow-ports"
+  network = google_compute_network.vpc.name
+
+  direction = "INGRESS"
+
+  allow {
+    protocol = "tcp"
+    ports    = var.allowed_ports
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+
+  target_tags = ["web-server"]
+}
+
+
 ### Best Practices
 - Follow principle of least privilege
 - Use lower priority numbers for deny rules
