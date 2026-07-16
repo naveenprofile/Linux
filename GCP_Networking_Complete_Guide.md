@@ -296,7 +296,7 @@ output "subnet_gateway" {
 
 ### Overview
 Firewall rules control inbound (ingress) and outbound (egress) traffic at the VPC level. They are stateful and evaluated by priority.
-
+A firewall rule is a security rule that controls who can access your VM, on which port, and using which protocol.
 ### Key Characteristics
 - **Stateful**: Response traffic is automatically allowed
 - **VPC-level**: Apply to all instances in the VPC
