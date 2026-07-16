@@ -1253,6 +1253,12 @@ output "vpn_gateway_ip" {
 ### Overview
 Google Cloud DNS provides managed, scalable DNS hosting for public and private zones.
 
+Cloud DNS is Google's fully managed, highly available DNS service that translates domain names into IP addresses. It supports both public and private DNS zones. Public zones are used for Internet-facing applications, while private zones are used for internal applications within a VPC. Common DNS records include A, AAAA, CNAME, MX, TXT, and NS. In production, Cloud DNS is commonly used with load balancers, Compute Engine, GKE, and Cloud Run to provide stable domain names while allowing the underlying IP addresses or infrastructure to change.
+
+
+When a user enters www.company.com in a browser, the browser first asks a DNS resolver to translate the domain name into an IP address. The resolver checks its cache. If the record isn't cached, it queries the authoritative DNS server, such as Google Cloud DNS. Cloud DNS looks up the DNS record (for example, an A record) and returns the corresponding IP address. The resolver caches the result based on the record's TTL and sends the IP address back to the browser. The browser then connects to that IP, which is often a Google Cloud Load Balancer. The load balancer routes the request to a healthy backend such as a Compute Engine VM, GKE cluster, or Cloud Run service. The application processes the request and returns the response to the user.
+
+
 ### Zone Types
 
 #### 1. Public Zones
