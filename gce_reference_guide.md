@@ -82,6 +82,19 @@ gcloud config set compute/zone us-central1-a
 - **Spot VMs**: Steep discount (up to 91%) but can be preempted anytime.
 - Billing is based on: machine type (vCPU + memory), boot/persistent disk size & type, network egress, and any attached GPUs.
 
+2. Machine Families
+General Purpose
+E2
+N2
+N2D
+Compute Optimized
+C2
+C3
+Memory Optimized
+M1
+M2
+Accelerator Optimized
+GPU machines
 
 ---
 
