@@ -363,6 +363,14 @@ With IaC:
               └─────────────────────────┘
 ```
 
+Terraform architecture consists of Configuration Files, Terraform Core, Provider, State File, and Cloud Provider APIs.
+
+We write infrastructure in .tf configuration files.
+Terraform Core reads the configuration and compares it with the current infrastructure.
+It uses the Provider (like Google or AWS) to communicate with the cloud.
+The Provider calls the cloud APIs to create, update, or delete resources.
+Finally, Terraform updates the State File (terraform.tfstate) to keep track of all managed resources.
+
 ### Terraform Execution Flow (Step by Step)
 
 **Step 1: terraform init**
