@@ -679,6 +679,8 @@ resource "kubernetes_deployment" "app" { }     # Kubernetes deployment
 
 ### The Standard 3-Step Workflow
 
+"The Terraform workflow starts by writing the infrastructure code in .tf files. Then I run terraform init to initialize the working directory, terraform validate to check the configuration, and terraform fmt to format the code. Next, I use terraform plan to review the proposed changes and terraform apply to provision or update the infrastructure. Finally, I verify the deployment, and if the infrastructure is no longer needed, I use terraform destroy to remove it."
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │  Step 1: WRITE                                          │
